@@ -112,6 +112,7 @@ public class LSL {
      * The minor version is library_version() % 100;
      */
     public static int library_version() { return inst.lsl_library_version(); }
+    public static String library_info() { return inst.lsl_library_info(); }
 
     /**
      * Obtain a local system time stamp in seconds. The resolution is better than a millisecond.
@@ -911,6 +912,7 @@ public class LSL {
     public interface dll extends Library {
         int lsl_protocol_version();
         int lsl_library_version();
+        String lsl_library_info();
         double lsl_local_clock();
         int lsl_resolve_all(Pointer[] buffer, int buffer_elements, double wait_time);
         int lsl_resolve_byprop(Pointer[] buffer, int buffer_elements, String prop, String value, int minimum, double wait_time);

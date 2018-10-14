@@ -1,0 +1,16 @@
+version: 1.12.{build}
+pull_requests:
+  do_not_increment_build_number: true
+shallow_clone: true
+environment:
+  DODEPLOY: false
+  APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+  ANDROID_HOME: C:\Program Files (x86)\Android\android-sdk
+  ANDROID_NDK_HOME: C:\ProgramData\Microsoft\AndroidNDK64\android-ndk-r17
+install:
+- git clone --depth 1 https://github.com/labstreaminglayer/liblsl ../liblsl
+- yes | "%ANDROID_HOME%\tools\bin\sdkmanager" --licenses > nul
+build_script:
+- gradlew assembleRelease
+artifacts:
+- path: 'build/outputs/aar/*.aar'

@@ -1107,7 +1107,7 @@ public class LSL {
             case Platform.ANDROID:
                 // For JNA <= 5.1.0
                 System.setProperty("jna.nosys", "false");
-                inst = (dll)Native.load("lsl", dll.class);
+                inst = (dll)Native.loadLibrary("lsl", dll.class);
                 break;
             default:
                 inst = (dll)Native.loadLibrary((Platform.is64Bit() ? "liblsl64.so" : "liblsl32.so"),dll.class);

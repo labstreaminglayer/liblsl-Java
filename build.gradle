@@ -14,7 +14,7 @@ buildscript {
 		jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.4.1'
     }
 }
 
@@ -23,7 +23,7 @@ dependencies {
         jcenter()
         google()
     }
-    implementation 'net.java.dev.jna:jna:5.1.0@aar'
+    implementation 'net.java.dev.jna:jna:5.3.1@aar'
 }
 
 android {

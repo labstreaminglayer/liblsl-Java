@@ -33,7 +33,11 @@ android {
         targets "lsl"
     }
     externalNativeBuild.cmake {
+        // If the Android SDK CMake is older than 3.12, you need to install CMake locally and
+        // configure the path in your local.properties file, e.g.
+        // cmake.dir=C\:\\Program Files\\CMake
+        version "3.12.0+"
         path "../liblsl/CMakeLists.txt"
     }
-	sourceSets.main.java.srcDirs += 'src'
+    sourceSets.main.java.srcDirs += 'src'
 }

@@ -11,6 +11,7 @@ install:
 - cmd: appveyor DownloadFile https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-win.zip -FileName ninja.zip
 - cmd: 7z x ninja.zip -oC:\projects\deps\ninja > nul
 - cmd: set PATH=C:\projects\deps\ninja;%PATH%
+- echo "cmake.dir=C:\\Program Files\\CMake" > local.properties
 - git clone --depth 1 https://github.com/labstreaminglayer/liblsl ../liblsl
 - yes | "%ANDROID_HOME%\tools\bin\sdkmanager" --licenses > nul
 build_script:

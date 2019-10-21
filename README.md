@@ -1,4 +1,4 @@
-# LSL java bindings
+# LSL java bindings, traditional build
 
 The Java interface for the lab streaming layer should run on Window/Linux/MacOS, 32/64 bit.
 The main class is `edu.ucsd.sccn.LSL`, which provides all necessary functions and sub-classes.
@@ -31,6 +31,11 @@ where SendData.java is the example that you are interested in.
 
 `LSL/liblsl-Java$ java -Djna.nosys=true -cp "jna-4.2.2.jar:src" examples.SendData` (on Linux)
 `LSL/liblsl-Java> java -cp "jna-4.2.2.jar;src" examples.SendData` (on Windows, yes the : changes to a ;)
+
+# Gradle build for Android
+
+The `build.gradle` is used to build a binary for Android devices and can be
+used as part of the from the `liblsl-Android` project.
 
 ## Java Example Programs: Basic to Advanced
 

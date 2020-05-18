@@ -14,7 +14,7 @@ buildscript {
 		jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.1'
+        classpath 'com.android.tools.build:gradle:3.6.3'
     }
 }
 
@@ -23,11 +23,11 @@ dependencies {
         jcenter()
         google()
     }
-    implementation 'net.java.dev.jna:jna:5.3.1@aar'
+    implementation 'net.java.dev.jna:jna:5.5.0@aar'
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig.externalNativeBuild.cmake {
         arguments "-DANDROID_CPP_FEATURES=rtti exceptions","-DLSL_NO_FANCY_LIBNAME=1"
         targets "lsl"

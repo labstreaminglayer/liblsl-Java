@@ -1093,35 +1093,27 @@ public class LSL {
 
     }
 
-    static dll inst;
+    private static dll inst;
     static {
         System.setProperty("jna.debug_load", "true");
         System.setProperty("jna.debug_load.jna", "true");
         switch (Platform.getOSType()) {
             case Platform.WINDOWS:
-                inst = (dll)Native.loadLibrary((Platform.is64Bit() ? "liblsl64.dll" : "liblsl32.dll"),dll.class);
+                inst = (dll) Native.load((Platform.is64Bit() ? "liblsl64.dll" : "liblsl32.dll"), dll.class);
                 break;
             case Platform.MAC:
-                inst = (dll)Native.loadLibrary((Platform.is64Bit() ? "liblsl64.dylib" : "liblsl32.dylib"),dll.class);
+                inst = (dll) Native.load((Platform.is64Bit() ? "liblsl64.dylib" : "liblsl32.dylib"), dll.class);
                 break;
             case Platform.ANDROID:
                 // For JNA <= 5.1.0
                 System.setProperty("jna.nosys", "false");
-                inst = (dll)Native.loadLibrary("lsl", dll.class);
+                inst = (dll) Native.load("lsl", dll.class);
                 break;
             default:
-                inst = (dll)Native.loadLibrary((Platform.is64Bit() ? "liblsl64.so" : "liblsl32.so"),dll.class);
+                inst = (dll) Native.load((Platform.is64Bit() ? "liblsl64.so" : "liblsl32.so"), dll.class);
                 if (inst == null)
-                    inst = (dll)Native.loadLibrary("liblsl.so",dll.class);
+                    inst = (dll) Native.load("liblsl.so", dll.class);
                 break;
         }
     }
-    /*static dll inst;
-    static {
-        String libname;
-        if (Platform.isWindows()) {
-
-        } else {
-        }
-    }*/
 }

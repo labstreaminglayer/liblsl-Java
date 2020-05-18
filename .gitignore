@@ -1,6 +1,7 @@
 /.externalNativeBuild
 /.gradle
 /.idea
+/.cxx
 /build/
 /liblsl-Java.iml
 /local.properties

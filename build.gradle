@@ -11,10 +11,10 @@ apply plugin: 'com.android.library'
 buildscript {
     repositories {
         google()
-		jcenter()
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
+        classpath 'com.android.tools.build:gradle:4.0.1'
     }
 }
 
@@ -23,13 +23,13 @@ dependencies {
         jcenter()
         google()
     }
-    implementation 'net.java.dev.jna:jna:5.5.0@aar'
+    implementation 'net.java.dev.jna:jna:5.6.0@aar'
 }
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     defaultConfig.externalNativeBuild.cmake {
-        arguments "-DANDROID_CPP_FEATURES=rtti exceptions","-DLSL_NO_FANCY_LIBNAME=1"
+        arguments "-DANDROID_CPP_FEATURES=rtti exceptions","-DLSL_NO_FANCY_LIBNAME=1","-DANDROID_PLATFORM=24"
         targets "lsl"
     }
     externalNativeBuild.cmake {
@@ -39,5 +39,6 @@ android {
         version "3.12.0+"
         path "../liblsl/CMakeLists.txt"
     }
+    buildToolsVersion '30.0.1'
     sourceSets.main.java.srcDirs += 'src'
 }

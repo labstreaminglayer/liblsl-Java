@@ -5,3 +5,8 @@
 /build/
 /liblsl-Java.iml
 /local.properties
+*.class
+jna-*.jar
+*.dll
+*.so
+*.dylib

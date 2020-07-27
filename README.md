@@ -1,66 +1,54 @@
-# LSL java bindings, traditional build
+# LSL java bindings
 
 The Java interface for the lab streaming layer should run on Window/Linux/MacOS, 32/64 bit.
 The main class is `edu.ucsd.sccn.LSL`, which provides all necessary functions and sub-classes.
-See `examples/` for examples and `javadoc/` for API documentation.
 
-To use this interface in your program, you need to import the class `edu.ucsd.sccn.LSL`,
-include the `jna-4.2.2.jar` package in your classpath, and have the native liblsl library 
-for your platform in path where it is found (e.g., your application's root directory, 
-or a system folder). This has been found to work with a variety of installations and operating 
-systems.
+## Getting Started - Traditional Build
 
-If you get an error about some class def not found: On some systems you may have to unzip 
-the `jna-4.2.2.jar` file to make sure that the libraries contained in it are found by Java.
+Generally, to use the labstreaminglayer java interface in your program, you must:
+* import the class `edu.ucsd.sccn.LSL`
+* include the `jna-{version}.jar` package in your classpath
+    * Tested with version 5.6.0
+* have the native liblsl library for your platform in a findable path
+    * e.g., put liblsl64.dll into your application's root directory, or a system folder
 
-If you an error like: `java.lang.UnsatisfiedLinkError: Unable to load library 'liblsl64.dll'`: 
-`Native library (win32-x86-64/liblsl64.dll) not found in resource path`: then you need to make 
-sure that your liblsl library is on a path found by the java runtime, e.g., in the path where 
-you execute the java command. One location where it will always be found is a system library 
-path, e.g., `Windows/system32` (not SysWOW64) on Windows; this should help during debugging.
+See the contents of `javadoc/` for API documentation.
 
-To compile and run the examples:
-Download [jna-4.2.2.jar](http://central.maven.org/maven2/net/java/dev/jna/jna/4.2.2/jna-4.2.2.jar) 
-to `LSL/liblsl-Java`.
+### Examples
 
-Build the LSL library (`liblsl64.dll`, for example) for your system, and copy it to
-`LSL/liblsl-Java`
+See `src/examples/` for quick examples of using `edu.ucsd.sccn.LSL`.
 
-`LSL/liblsl-Java$ javac -cp jna-4.2.2.jar src/edu/ucsd/sccn/LSL.java src/examples/SendData.java `
-where SendData.java is the example that you are interested in.
+The instructions for the provided examples assume you have configured your system as follows:
+* You have installed the JDK and its executables (`javac`, `java`) are on the path.
+    * Android Studio users can add its `jre/bin` folder to the PATH
+        * e.g. Windows: `set PATH=%PATH%;C:\Program Files\Android\Android Studio\jre\bin`
+* [Download the jna jar](https://mvnrepository.com/artifact/net.java.dev.jna/jna) to the root `liblsl-Java` folder.
+    * Click on your version, then find the download link in Files: jar
+    * Tested with version 5.6.0
+* Copy the LSL library for your system (e.g., `liblsl64.dll`) to the root `liblsl-Java` folder.
+    * May be downloaded from the [liblsl releases page](https://github.com/sccn/liblsl/releases).
 
-`LSL/liblsl-Java$ java -Djna.nosys=true -cp "jna-4.2.2.jar:src" examples.SendData` (on Linux)
-`LSL/liblsl-Java> java -cp "jna-4.2.2.jar;src" examples.SendData` (on Windows, yes the : changes to a ;)
+Compile the example (JDK binaries `javac` and `java` must be on path):
+* `./liblsl-Java$ javac -cp jna-5.6.0.jar src/edu/ucsd/sccn/LSL.java src/examples/SendData.java`
+    * Swap out SendData.java for another example that you are interested in.
 
-# Gradle build for Android
+Launch the example:
+* Linux: `./liblsl-Java$ java -Djna.nosys=true -cp "jna-5.6.0.jar:src" examples.SendData`
+* Windows: `./liblsl-Java> java -cp "jna-5.6.0.jar;src" examples.SendData`
+    * (Note the : changes to a ;)
 
-The `build.gradle` is used to build a binary for Android devices and can be
-used as part of the from the `liblsl-Android` project.
+Descriptions of the provided example programs can be found [in the online documentation](https://labstreaminglayer.readthedocs.io/dev/examples.html#java-example-programs-basic-to-advanced).
 
-## Java Example Programs: Basic to Advanced
+## Getting Started - Android
 
-These examples show how to transmit a numeric multi-channel time series through LSL:
+The `build.gradle` is used to build a binary for Android devices and can be used as part of the `liblsl-Android` project. The build script assumes that the liblsl repository contents can be found in a sister folder: `../liblsl`, and that you have a version of CMake >= 3.12 (path to CMake can be configured in local.properties file).
 
-  * [Sending a multi-channel time series into LSL.](src/examples/SendData.java)
-  * [Receiving a multi-channel time series from LSL.](src/examples/ReceiveData.java)
+See the [liblsl-Android documentation for Android Studio](https://github.com/labstreaminglayer/liblsl-Android/tree/master/AndroidStudio) for more information.
 
-The following examples show how to transmit data in form of chunks instead of samples, which can
-be more convenient.
+## Troubleshooting
 
-  * [Sending a multi-channel time series in chunks.](src/examples/SendDataInChunks.java)
-  * [Receiving a multi-channel time series in chunks.](src/examples/ReceiveDataInChunks.java)
+If you get an error about some class def not found:
+* On some systems you may have to unzip the `jna-{version}.jar` file to make sure that the libraries contained in it are found by Java.
 
-These examples show a special-purpose use case that is mostly relevant for stimulus-presentation
-programs or other applications that want to emit 'event' markers or other application state.
-The stream here is single-channel and has irregular sampling rate, but the value per channel is a
-string:
-
-  * [Sending string-formatted irregular streams.](src/examples/SendStringMarkers.java)
-  * [Receiving string-formatted irregular streams.](src/examples/ReceiveStringMarkers.java)
-
-The last example shows how to attach properly formatted meta-data to a stream, and how to read it
-out again at the receiving end.
-While meta-data is strictly optional, it is very useful to make streams self-describing.
-LSL has adopted the convention to name meta-data fields according to the XDF file format
-specification whenever the content type matches (for example EEG, Gaze, MoCap, VideoRaw, etc);
-the spec is [here](https://github.com/sccn/xdf/wiki/Meta-Data).
+If you encounter an error like: `java.lang.UnsatisfiedLinkError: Unable to load library 'liblsl64.dll'`: `Native library (win32-x86-64/liblsl64.dll) not found in resource path`:
+* make sure that your liblsl library is on a path found by the java runtime, e.g., in the path where you execute the java command. One location where it will always be found is a system library path, e.g., `Windows/system32` (not SysWOW64) on Windows. It is not recommended to keep the lsl lib here permanently but temporarily this can help during debugging.

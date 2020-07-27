@@ -1,12 +1,11 @@
-version: 1.12.{build}
+version: 1.13.{build}
 pull_requests:
   do_not_increment_build_number: true
 shallow_clone: true
 environment:
   DODEPLOY: false
-  APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+  APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
   ANDROID_HOME: C:\Program Files (x86)\Android\android-sdk
-  ANDROID_NDK_HOME: C:\ProgramData\Microsoft\AndroidNDK64\android-ndk-r21
 install:
 - cmd: appveyor DownloadFile https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-win.zip -FileName ninja.zip
 - cmd: 7z x ninja.zip -oC:\projects\deps\ninja > nul

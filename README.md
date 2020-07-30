@@ -5,12 +5,15 @@ The main class is `edu.ucsd.sccn.LSL`, which provides all necessary functions an
 
 ## Getting Started - Traditional Build
 
+Users intending to use the liblsl Java interface for Android should skip ahead to the Android-specific section near the bottom.
+
 Generally, to use the labstreaminglayer java interface in your program, you must:
 * import the class `edu.ucsd.sccn.LSL`
 * include the `jna-{version}.jar` package in your classpath
     * Tested with version 5.6.0
 * have the native liblsl library for your platform in a findable path
-    * e.g., put liblsl64.dll into your application's root directory, or a system folder
+    * e.g., put liblsl64.dll into your application's root directory, or a system folder.
+    * The section of code that looks for the shared library is [here](https://github.com/labstreaminglayer/liblsl-Java/blob/master/src/edu/ucsd/sccn/LSL.java#L1100-L1117). This may simplify in the future and the expected filename might change on Windows to `lsl.dll` to match standard naming conventions.
 
 See the contents of `javadoc/` for API documentation.
 

@@ -6,23 +6,27 @@
 // dependencies { implementation project(':liblsl-java') }
 // in the app's build.gradle
 
-apply plugin: 'com.android.library'
-
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.android.tools.build:gradle:7.4.+'
     }
 }
 
+plugins {
+    id 'com.android.library' version '7.4.+'
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
 dependencies {
-    repositories {
-        jcenter()
-        google()
-    }
     implementation 'net.java.dev.jna:jna:5.6.0@aar'
 }
 
@@ -30,20 +34,20 @@ android {
     compileSdkVersion 30
     defaultConfig {
         minSdkVersion 24
-        externalNativeBuild {
-            cmake {
-                arguments "-DANDROID_CPP_FEATURES=rtti exceptions","-DLSL_NO_FANCY_LIBNAME=1","-DANDROID_PLATFORM=24"
-                targets "lsl"
-            }
+        externalNativeBuild.cmake {
+            arguments "-DANDROID_CPP_FEATURES=rtti exceptions", "-DANDROID_PLATFORM=24"
+            targets "lsl"
         }
     }
+
+    buildToolsVersion '30.0.1'
+    sourceSets.main.java.srcDirs += 'src'
+
     externalNativeBuild.cmake {
         // If the Android SDK CMake is older than 3.12, you need to install CMake locally and
         // configure the path in your local.properties file, e.g.
         // cmake.dir=C\:\\Program Files\\CMake
-        version "3.12.0+"
-        path "../liblsl/CMakeLists.txt"
+        version '3.12.0+'
+        path('../liblsl/CMakeLists.txt')
     }
-    buildToolsVersion '30.0.1'
-    sourceSets.main.java.srcDirs += 'src'
 }

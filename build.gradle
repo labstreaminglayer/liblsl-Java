@@ -13,12 +13,12 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.+'
+        classpath 'com.android.tools.build:gradle:8.1.+'
     }
 }
 
 plugins {
-    id 'com.android.library' version '7.+'
+    id 'com.android.library' version '8.1.+'
 }
 
 repositories {
@@ -27,20 +27,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'net.java.dev.jna:jna:5.12.0@aar'
+    implementation 'net.java.dev.jna:jna:5.13.0@aar'
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 33
     defaultConfig {
         minSdkVersion 24
         externalNativeBuild.cmake {
-            arguments "-DANDROID_CPP_FEATURES=rtti exceptions", "-DANDROID_PLATFORM=24"
+            arguments "-DANDROID_PLATFORM=$minSdk", "-DLSL_SLIMARCHIVE=ON"
+            cppFlags "-fexceptions","-std=c++17"
             targets "lsl"
         }
     }
 
     sourceSets.main.java.srcDirs += 'src'
+    namespace = 'edu.ucsd.sccn'
 
     externalNativeBuild.cmake {
         // If the Android SDK CMake is older than 3.12, you need to install CMake locally and
@@ -48,5 +50,8 @@ android {
         // cmake.dir=C\:\\Program Files\\CMake
         version '3.18.1+'
         path(properties['liblsl_path'] ?: '../liblsl/CMakeLists.txt')
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
